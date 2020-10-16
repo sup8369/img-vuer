@@ -255,7 +255,7 @@ export default {
 
 /* 左划后右划触发swipe无法解决，只能把当前图片置顶 */
 .z1 {
-  z-index: 1;
+  z-index: 21;
 }
 
 .open {
