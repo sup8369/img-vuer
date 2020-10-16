@@ -1,0 +1,68 @@
+{
+  "_from": "git+https://github.com/sup8369/img-vuer.git",
+  "_id": "img-vuer@0.19.2",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/img-vuer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/sup8369/img-vuer.git",
+    "rawSpec": "https://github.com/sup8369/img-vuer.git",
+    "saveSpec": "git+https://github.com/sup8369/img-vuer.git",
+    "fetchSpec": "https://github.com/sup8369/img-vuer.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/sup8369/img-vuer.git#e42977822bb4960651e5fd86a3228abde746bc64",
+  "_spec": "https://github.com/sup8369/img-vuer.git",
+  "_where": "/Users/wemeet/Workspace/proto_web",
+  "author": {
+    "name": "zhoudejie",
+    "email": "ssshooterx@gmail.com"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "bundleDependencies": false,
+  "dependencies": {
+    "v-finger-mk42": "^2.0.4"
+  },
+  "deprecated": false,
+  "description": "img viewer",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-scroller": "^2.2.4",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "keywords": [
+    "vue",
+    "gallery",
+    "image",
+    "image-viwer"
+  ],
+  "license": "MIT",
+  "name": "img-vuer",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules && cross-env NODE_ENV=vueplugin webpack --progress --hide-modules",
+    "demo": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "plugin": "cross-env NODE_ENV=vueplugin webpack --progress --hide-modules"
+  },
+  "version": "0.19.2"
+}
