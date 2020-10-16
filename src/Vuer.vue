@@ -3,7 +3,7 @@
     <div class="prevent-pass-through"></div>
     <div
       class="slider"
-      :style="{'background-color':backgroundColor}"
+      :style="{ 'background-color': backgroundColor }"
       v-finger:singleTap="handleTapClose"
     >
       <div
@@ -13,33 +13,41 @@
         v-finger:touchStart="handleTouchStart"
         v-finger:touchEnd="handleTouchEnd"
         v-finger:swipe="handleSwipe"
-      > 
+      >
         <VuerSingle
           class="item"
-          v-for="(src,index) in imgList"
+          v-for="(src, index) in imgList"
           :key="src + index"
           ref="img"
           :src="src"
-          :class="{z1:currentIndex===index}"
+          :class="{ z1: currentIndex === index }"
           @disableSwipe="allowSwipe = false"
           @enableSwipe="allowSwipe = true"
         />
       </div>
-      <div class="words title">{{title}}</div>
-      <div v-if="useCloseButton" @click="handleTapClose(null,null,true)" class="words close-btn">×</div>
-      <div v-if="isIndexShow" class="words index">{{currentIndex + 1 + '/' + imgList.length}}</div>
+      <div class="words title">{{ title }}</div>
+      <div
+        v-if="useCloseButton"
+        @click="handleTapClose(null, null, true)"
+        class="words close-btn"
+      >
+        ×
+      </div>
+      <div v-if="isIndexShow" class="words index">
+        {{ currentIndex + 1 + "/" + imgList.length }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import VuerSingle from './VuerSingle'
-import To from './to.js'
+import VuerSingle from "./VuerSingle";
+import To from "./to.js";
 export default {
   components: { VuerSingle },
   data() {
     return {
-      backgroundColor: '#FFF',
+      backgroundColor: "#FFF",
       imgList: [],
       isSingle: false,
       isShow: false,
@@ -56,121 +64,121 @@ export default {
        * 修改currentIndex后清零
        */
       swipeDelta: 0,
-      swipeThreshold: 100
-    }
+      swipeThreshold: 100,
+    };
   },
   beforeRouteLeave(to, from, next) {
     // 路由跳转时关闭图片预览
-    vm.isShow = false
-    next()
+    vm.isShow = false;
+    next();
   },
   computed: {
     maxIndex() {
-      return this.imgList.length - 1
-    }
+      return this.imgList.length - 1;
+    },
   },
   watch: {
     isShow(val) {
       if (val) {
         // 使用 history 处理安卓物理返回键关闭图片
         if (/android/i.test(navigator.userAgent)) {
-          history.pushState(null, null, location.href)
-          window.addEventListener('popstate', this.closeGallery)
+          history.pushState(null, null, location.href);
+          window.addEventListener("popstate", this.closeGallery);
         }
-        document.querySelector('.prevent-pass-through').className =
-          'prevent-pass-through prevent-pass-through-show'
-        document.querySelector('.slider').className = 'slider open'
+        document.querySelector(".prevent-pass-through").className =
+          "prevent-pass-through prevent-pass-through-show";
+        document.querySelector(".slider").className = "slider open";
       } else {
-        window.removeEventListener('popstate', this.closeGallery)
+        window.removeEventListener("popstate", this.closeGallery);
         setTimeout(
           () =>
-            (document.querySelector('.prevent-pass-through').className =
-              'prevent-pass-through'),
+            (document.querySelector(".prevent-pass-through").className =
+              "prevent-pass-through"),
           400
-        )
-        document.querySelector('.slider').className = 'slider close'
+        );
+        document.querySelector(".slider").className = "slider close";
       }
     },
     currentIndex() {
       // 图片未加载成功时无宽度 ，加载完成后先显示第一张后跳到当前
-      let el = document.querySelector('.item-wrapper')
-      el.translateX = -this.currentIndex * el.getBoundingClientRect().width
+      let el = document.querySelector(".item-wrapper");
+      el.translateX = -this.currentIndex * el.getBoundingClientRect().width;
       if (!this.preload) {
         this.$nextTick(() => {
-          this.$refs.img[this.currentIndex].imgInit()
-        })
+          this.$refs.img[this.currentIndex].imgInit();
+        });
       }
     },
     imgList() {
-      let el = document.querySelector('.item-wrapper')
-      el.translateX = -this.currentIndex * el.getBoundingClientRect().width
+      let el = document.querySelector(".item-wrapper");
+      el.translateX = -this.currentIndex * el.getBoundingClientRect().width;
       if (!this.preload) {
         this.$nextTick(() => {
-          this.$refs.img[this.currentIndex].imgInit()
-        })
+          this.$refs.img[this.currentIndex].imgInit();
+        });
       }
-    }
+    },
   },
   methods: {
     handleTapClose(e, el, fromCloseButton) {
-      if (this.useCloseButton && !fromCloseButton) return
+      if (this.useCloseButton && !fromCloseButton) return;
       if (/android/i.test(navigator.userAgent)) {
-        history.back()
+        history.back();
       }
-      this.closeGallery()
+      this.closeGallery();
     },
     closeGallery() {
-      this.isShow = false
-      this.$refs.img[this.currentIndex].reset()
+      this.isShow = false;
+      this.$refs.img[this.currentIndex].reset();
     },
     handlePressMove(e, el) {
-      e.preventDefault()
-      if (this.allowSwipe === false || this.isSingle) return
-      el.translateX += e.deltaX
-      this.swipeDelta += e.deltaX
+      e.preventDefault();
+      if (this.allowSwipe === false || this.isSingle) return;
+      el.translateX += e.deltaX;
+      this.swipeDelta += e.deltaX;
     },
     handleTouchStart() {
-      To.stopAll()
+      To.stopAll();
     },
     handleTouchEnd(e, el) {
       // touchmove太短无法触发swipe时用于复位
       if (Math.abs(this.swipeDelta) < this.swipeThreshold) {
-        this.swipeDelta = 0
-        let width = el.getBoundingClientRect().width
-        new To(el, 'translateX', -this.currentIndex * width, 200, this.ease)
+        this.swipeDelta = 0;
+        let width = el.getBoundingClientRect().width;
+        new To(el, "translateX", -this.currentIndex * width, 200, this.ease);
       }
     },
     handleSwipe(evt, el) {
       // swipeDelta小于swipeThreshold不触发翻页
       if (Math.abs(this.swipeDelta) < this.swipeThreshold) {
         // 借 handleTouchEnd 复位
-        return
+        return;
       }
-      let width = el.getBoundingClientRect().width
-      if (evt.direction === 'Left' && this.currentIndex < this.maxIndex) {
-        this.$refs.img[this.currentIndex].reset()
-        this.currentIndex += 1
-      } else if (evt.direction === 'Right' && this.currentIndex > 0) {
-        this.$refs.img[this.currentIndex].reset()
-        this.currentIndex -= 1
+      let width = el.getBoundingClientRect().width;
+      if (evt.direction === "Left" && this.currentIndex < this.maxIndex) {
+        this.$refs.img[this.currentIndex].reset();
+        this.currentIndex += 1;
+      } else if (evt.direction === "Right" && this.currentIndex > 0) {
+        this.$refs.img[this.currentIndex].reset();
+        this.currentIndex -= 1;
       }
-      new To(el, 'translateX', -this.currentIndex * width, 200, this.ease)
-      this.swipeDelta = 0
+      new To(el, "translateX", -this.currentIndex * width, 200, this.ease);
+      this.swipeDelta = 0;
     },
     next() {
-      let el = document.querySelector('.item-wrapper')
-      let width = el.getBoundingClientRect().width
-      this.currentIndex += 1
-      new To(el, 'translateX', -this.currentIndex * width, 200, this.ease)
+      let el = document.querySelector(".item-wrapper");
+      let width = el.getBoundingClientRect().width;
+      this.currentIndex += 1;
+      new To(el, "translateX", -this.currentIndex * width, 200, this.ease);
     },
     prev() {
-      let el = document.querySelector('.item-wrapper')
-      let width = el.getBoundingClientRect().width
-      this.currentIndex -= 1
-      new To(el, 'translateX', -this.currentIndex * width, 200, this.ease)
-    }
-  }
-}
+      let el = document.querySelector(".item-wrapper");
+      let width = el.getBoundingClientRect().width;
+      this.currentIndex -= 1;
+      new To(el, "translateX", -this.currentIndex * width, 200, this.ease);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -192,7 +200,7 @@ export default {
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
-  letter-spacing: -0.15px; 
+  letter-spacing: -0.15px;
   color: #2b3743;
 }
 .index {
@@ -206,16 +214,16 @@ export default {
   font-size: 26px;
 }
 .title {
-     font-size: 14px;
+  font-size: 14px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: -0.18px;
   text-align: center;
-  color: #2b3743; 
+  color: #2b3743;
 
-  top: 22px;
+  top: 27px;
   width: 100%;
 }
 
