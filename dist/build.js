@@ -604,14 +604,16 @@ module.exports = g;
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: { Vuer: __WEBPACK_IMPORTED_MODULE_0__Vuer_vue__["a" /* default */] },
-  mounted: function mounted() {
+  mounted() {
     console.log(this.$imgVuer);
   },
-  data: function data() {
+  data() {
     return {
       list1: [{
         src: 'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/1.jpg'
@@ -646,9 +648,8 @@ module.exports = g;
       }]
     };
   },
-
   methods: {
-    toGitHub: function toGitHub() {
+    toGitHub() {
       location.href = 'https://github.com/ssshooter/img-vuer';
     }
   }
@@ -661,7 +662,7 @@ module.exports = g;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Vuer_vue__ = __webpack_require__(6);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1936c06e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Vuer_vue__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5557745f_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Vuer_vue__ = __webpack_require__(29);
 function injectStyle (ssrContext) {
   __webpack_require__(19)
 }
@@ -676,12 +677,12 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-1936c06e"
+var __vue_scopeId__ = "data-v-5557745f"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Vuer_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1936c06e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Vuer_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5557745f_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Vuer_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -737,9 +738,9 @@ var Component = normalizeComponent(
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: { VuerSingle: __WEBPACK_IMPORTED_MODULE_0__VuerSingle__["a" /* default */] },
-  data: function data() {
+  data() {
     return {
-      backgroundColor: '#111',
+      backgroundColor: '#FFF',
       imgList: [],
       isSingle: false,
       isShow: false,
@@ -748,6 +749,7 @@ var Component = normalizeComponent(
       preload: true,
       allowSwipe: false,
       currentIndex: 0,
+      title: "",
       /**
        * 从允许swipe开始纪录swipe位移
        * handleTouchEnd时位移小于100（意味着无法触发swipe），清零
@@ -758,19 +760,18 @@ var Component = normalizeComponent(
       swipeThreshold: 100
     };
   },
-  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to, from, next) {
     // 路由跳转时关闭图片预览
     vm.isShow = false;
     next();
   },
-
   computed: {
-    maxIndex: function maxIndex() {
+    maxIndex() {
       return this.imgList.length - 1;
     }
   },
   watch: {
-    isShow: function isShow(val) {
+    isShow(val) {
       if (val) {
         // 使用 history 处理安卓物理返回键关闭图片
         if (/android/i.test(navigator.userAgent)) {
@@ -781,72 +782,66 @@ var Component = normalizeComponent(
         document.querySelector('.slider').className = 'slider open';
       } else {
         window.removeEventListener('popstate', this.closeGallery);
-        setTimeout(function () {
-          return document.querySelector('.prevent-pass-through').className = 'prevent-pass-through';
-        }, 400);
+        setTimeout(() => document.querySelector('.prevent-pass-through').className = 'prevent-pass-through', 400);
         document.querySelector('.slider').className = 'slider close';
       }
     },
-    currentIndex: function currentIndex() {
-      var _this = this;
-
+    currentIndex() {
       // 图片未加载成功时无宽度 ，加载完成后先显示第一张后跳到当前
-      var el = document.querySelector('.item-wrapper');
+      let el = document.querySelector('.item-wrapper');
       el.translateX = -this.currentIndex * el.getBoundingClientRect().width;
       if (!this.preload) {
-        this.$nextTick(function () {
-          _this.$refs.img[_this.currentIndex].imgInit();
+        this.$nextTick(() => {
+          this.$refs.img[this.currentIndex].imgInit();
         });
       }
     },
-    imgList: function imgList() {
-      var _this2 = this;
-
-      var el = document.querySelector('.item-wrapper');
+    imgList() {
+      let el = document.querySelector('.item-wrapper');
       el.translateX = -this.currentIndex * el.getBoundingClientRect().width;
       if (!this.preload) {
-        this.$nextTick(function () {
-          _this2.$refs.img[_this2.currentIndex].imgInit();
+        this.$nextTick(() => {
+          this.$refs.img[this.currentIndex].imgInit();
         });
       }
     }
   },
   methods: {
-    handleTapClose: function handleTapClose(e, el, fromCloseButton) {
+    handleTapClose(e, el, fromCloseButton) {
       if (this.useCloseButton && !fromCloseButton) return;
       if (/android/i.test(navigator.userAgent)) {
         history.back();
       }
       this.closeGallery();
     },
-    closeGallery: function closeGallery() {
+    closeGallery() {
       this.isShow = false;
       this.$refs.img[this.currentIndex].reset();
     },
-    handlePressMove: function handlePressMove(e, el) {
+    handlePressMove(e, el) {
       e.preventDefault();
       if (this.allowSwipe === false || this.isSingle) return;
       el.translateX += e.deltaX;
       this.swipeDelta += e.deltaX;
     },
-    handleTouchStart: function handleTouchStart() {
+    handleTouchStart() {
       __WEBPACK_IMPORTED_MODULE_1__to_js__["a" /* default */].stopAll();
     },
-    handleTouchEnd: function handleTouchEnd(e, el) {
+    handleTouchEnd(e, el) {
       // touchmove太短无法触发swipe时用于复位
       if (Math.abs(this.swipeDelta) < this.swipeThreshold) {
         this.swipeDelta = 0;
-        var width = el.getBoundingClientRect().width;
+        let width = el.getBoundingClientRect().width;
         new __WEBPACK_IMPORTED_MODULE_1__to_js__["a" /* default */](el, 'translateX', -this.currentIndex * width, 200, this.ease);
       }
     },
-    handleSwipe: function handleSwipe(evt, el) {
+    handleSwipe(evt, el) {
       // swipeDelta小于swipeThreshold不触发翻页
       if (Math.abs(this.swipeDelta) < this.swipeThreshold) {
         // 借 handleTouchEnd 复位
         return;
       }
-      var width = el.getBoundingClientRect().width;
+      let width = el.getBoundingClientRect().width;
       if (evt.direction === 'Left' && this.currentIndex < this.maxIndex) {
         this.$refs.img[this.currentIndex].reset();
         this.currentIndex += 1;
@@ -857,15 +852,15 @@ var Component = normalizeComponent(
       new __WEBPACK_IMPORTED_MODULE_1__to_js__["a" /* default */](el, 'translateX', -this.currentIndex * width, 200, this.ease);
       this.swipeDelta = 0;
     },
-    next: function next() {
-      var el = document.querySelector('.item-wrapper');
-      var width = el.getBoundingClientRect().width;
+    next() {
+      let el = document.querySelector('.item-wrapper');
+      let width = el.getBoundingClientRect().width;
       this.currentIndex += 1;
       new __WEBPACK_IMPORTED_MODULE_1__to_js__["a" /* default */](el, 'translateX', -this.currentIndex * width, 200, this.ease);
     },
-    prev: function prev() {
-      var el = document.querySelector('.item-wrapper');
-      var width = el.getBoundingClientRect().width;
+    prev() {
+      let el = document.querySelector('.item-wrapper');
+      let width = el.getBoundingClientRect().width;
       this.currentIndex -= 1;
       new __WEBPACK_IMPORTED_MODULE_1__to_js__["a" /* default */](el, 'translateX', -this.currentIndex * width, 200, this.ease);
     }
@@ -902,7 +897,7 @@ var Component = normalizeComponent(
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: ['src'],
   components: { Loader: __WEBPACK_IMPORTED_MODULE_1__loader_DoubleBounce__["a" /* default */] },
-  data: function data() {
+  data() {
     return {
       imgEl: null,
       loading: true,
@@ -913,29 +908,28 @@ var Component = normalizeComponent(
       isInited: false
     };
   },
-  mounted: function mounted() {
+  mounted() {
     if (!this.src) return false;
     this.$emit('disableSwipe');
     if (this.$root.preload) {
       this.imgInit();
     }
   },
-
   methods: {
-    imgInit: function imgInit(onload) {
+    imgInit(onload) {
       if (this.isInited && this.srcDelay === this.src) return;
       console.log('preload', this.$root.preload);
       console.log('load img', this.src);
 
-      var vm = this;
+      let vm = this;
       vm.srcDelay = vm.src;
       vm.isInited = true;
 
-      var img = new Image();
-      var imgEl = this.$el.lastChild.firstChild;
+      let img = new Image();
+      let imgEl = this.$el.lastChild.firstChild;
       img.onload = function () {
-        var h = this.height;
-        var w = this.width;
+        let h = this.height;
+        let w = this.width;
         vm.imgEl = imgEl;
         vm.imgHeight = h;
         vm.imgWidth = w;
@@ -958,19 +952,19 @@ var Component = normalizeComponent(
       };
       img.src = this.src;
     },
-    getCriticalX: function getCriticalX(scale) {
+    getCriticalX(scale) {
       // 获取横向临界值
       return (this.imgWidth * scale - window.innerWidth) / 2;
     },
-    getCriticalY: function getCriticalY(scale) {
+    getCriticalY(scale) {
       // 获取纵向临界值
       return (this.imgHeight * scale - window.innerHeight) / 2;
     },
-    handleMultipointStart: function handleMultipointStart(e) {
+    handleMultipointStart(e) {
       this.currentScale = this.imgEl.scaleX;
     },
-    handlePressMove: function handlePressMove(e) {
-      var el = this.imgEl;
+    handlePressMove(e) {
+      let el = this.imgEl;
       e.preventDefault();
       if (this.isSmall) {
         el.translateX += e.deltaX / 3;
@@ -985,12 +979,12 @@ var Component = normalizeComponent(
         return;
       }
 
-      var criticalX = this.getCriticalX(el.scaleX);
-      var criticalY = this.getCriticalY(el.scaleY);
+      let criticalX = this.getCriticalX(el.scaleX);
+      let criticalY = this.getCriticalY(el.scaleY);
 
       // 实现超过临界值移动速度减缓
-      var slowX = el.translateX > criticalX || el.translateX < -criticalX;
-      var slowY = el.translateY > criticalY || el.translateY < -criticalY;
+      let slowX = el.translateX > criticalX || el.translateX < -criticalX;
+      let slowY = el.translateY > criticalY || el.translateY < -criticalY;
 
       this.$emit('disableSwipe');
       if (slowX) {
@@ -1001,8 +995,8 @@ var Component = normalizeComponent(
         el.translateY += e.deltaY / 3;
       } else el.translateY += e.deltaY;
     },
-    handleTouchEnd: function handleTouchEnd(e) {
-      var el = this.imgEl;
+    handleTouchEnd(e) {
+      let el = this.imgEl;
       if (this.isSmall || el.scaleX / this.initialScale < 1) {
         this.reset();
         return;
@@ -1012,8 +1006,8 @@ var Component = normalizeComponent(
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'scaleX', this.initialScale * 6, 500, this.ease);
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'scaleY', this.initialScale * 6, 500, this.ease);
       }
-      var criticalX = this.getCriticalX(el.scaleX);
-      var criticalY = this.getCriticalY(el.scaleY);
+      let criticalX = this.getCriticalX(el.scaleX);
+      let criticalY = this.getCriticalY(el.scaleY);
 
       if (window.innerHeight >= this.imgHeight * el.scaleX) {
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'translateY', 0, 500, this.ease);
@@ -1035,17 +1029,17 @@ var Component = normalizeComponent(
         }
       }
     },
-    handleDoubleTap: function handleDoubleTap(e) {
-      var el = this.imgEl;
+    handleDoubleTap(e) {
+      let el = this.imgEl;
       if (this.isSmall) return;
 
       this.$emit('disableSwipe');
       if (this.imgEl.scaleX !== this.initialScale) {
         this.reset();
       } else {
-        var box = el.getBoundingClientRect();
-        var y = window.innerHeight / 2 - e.changedTouches[0].clientY;
-        var x = window.innerWidth / 2 - e.changedTouches[0].clientX;
+        let box = el.getBoundingClientRect();
+        let y = window.innerHeight / 2 - e.changedTouches[0].clientY;
+        let x = window.innerWidth / 2 - e.changedTouches[0].clientX;
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'scaleX', this.initialScale * 2, 500, this.ease);
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'scaleY', this.initialScale * 2, 500, this.ease);
         new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](el, 'translateX', x, 500, this.ease);
@@ -1053,18 +1047,18 @@ var Component = normalizeComponent(
         console.dir(el);
       }
     },
-    handlePinch: function handlePinch(e, el) {
+    handlePinch(e, el) {
       this.$emit('disableSwipe');
       this.imgEl.scaleX = this.imgEl.scaleY = this.currentScale * e.zoom;
     },
-    reset: function reset() {
+    reset() {
       if (!this.imgEl) return;
       new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](this.imgEl, 'scaleX', this.initialScale, 500, this.ease);
       new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](this.imgEl, 'scaleY', this.initialScale, 500, this.ease);
       new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](this.imgEl, 'translateX', 0, 500, this.ease);
       new __WEBPACK_IMPORTED_MODULE_0__to_js__["a" /* default */](this.imgEl, 'translateY', 0, 500, this.ease);
     },
-    ease: function ease(x) {
+    ease(x) {
       return Math.sqrt(1 - Math.pow(x - 1, 2));
     }
   }
@@ -1076,50 +1070,47 @@ var Component = normalizeComponent(
 
 "use strict";
 // alloy 的补间函数
-var To = function(el, property, value, time, ease, onEnd, onChange) {
-  var current = el[property]
-  var dv = value - current
-  var beginTime = new Date()
-  var self = this
-  var currentEase =
-    ease ||
-    function(a) {
-      return a
-    }
-  this.tickID = null
-  var toTick = function() {
-    var dt = new Date() - beginTime
+var To = function (el, property, value, time, ease, onEnd, onChange) {
+  var current = el[property];
+  var dv = value - current;
+  var beginTime = new Date();
+  var self = this;
+  var currentEase = ease || function (a) {
+    return a;
+  };
+  this.tickID = null;
+  var toTick = function () {
+    var dt = new Date() - beginTime;
     if (dt >= time) {
-      el[property] = value
-      onChange && onChange(value)
-      onEnd && onEnd(value)
-      cancelAnimationFrame(self.tickID)
-      self.toTick = null
-      return
+      el[property] = value;
+      onChange && onChange(value);
+      onEnd && onEnd(value);
+      cancelAnimationFrame(self.tickID);
+      self.toTick = null;
+      return;
     }
-    el[property] = dv * currentEase(dt / time) + current
-    self.tickID = requestAnimationFrame(toTick)
-    onChange && onChange(el[property])
-  }
-  toTick()
-  To.List.push(this)
-}
+    el[property] = dv * currentEase(dt / time) + current;
+    self.tickID = requestAnimationFrame(toTick);
+    onChange && onChange(el[property]);
+  };
+  toTick();
+  To.List.push(this);
+};
 
-To.List = []
+To.List = [];
 
-To.stopAll = function() {
+To.stopAll = function () {
   for (var i = 0, len = To.List.length; i < len; i++) {
-    cancelAnimationFrame(To.List[i].tickID)
+    cancelAnimationFrame(To.List[i].tickID);
   }
-  To.List.length = 0
-}
+  To.List.length = 0;
+};
 
-To.stop = function(to) {
-  cancelAnimationFrame(to.tickID)
-}
+To.stop = function (to) {
+  cancelAnimationFrame(to.tickID);
+};
 
 /* harmony default export */ __webpack_exports__["a"] = (To);
-
 
 /***/ }),
 /* 9 */
@@ -1153,21 +1144,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_3_vue_scroller___default.a)
+__WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_3_vue_scroller___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODULE_2__gallery__["a" /* default */], {
   swipeThreshold: 100,
   isIndexShow: true,
   useCloseButton: true,
-  preload: false,
-})
+  preload: false
+});
 
 new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
   el: '#app',
-  render: h => h(__WEBPACK_IMPORTED_MODULE_1__App_vue__["a" /* default */]),
-})
+  render: h => h(__WEBPACK_IMPORTED_MODULE_1__App_vue__["a" /* default */])
+});
 
 // demo 实例创建
-
 
 /***/ }),
 /* 11 */
@@ -10072,7 +10062,7 @@ process.umask = function() { return 0; };
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(4);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6f70ed94_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_504e1a85_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(30);
 function injectStyle (ssrContext) {
   __webpack_require__(16)
 }
@@ -10087,12 +10077,12 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-6f70ed94"
+var __vue_scopeId__ = "data-v-504e1a85"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6f70ed94_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_504e1a85_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -10113,7 +10103,7 @@ var content = __webpack_require__(17);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("2477621c", content, true, {});
+var update = __webpack_require__(1)("0b1c04b2", content, true, {});
 
 /***/ }),
 /* 17 */
@@ -10124,7 +10114,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, ".thumbnail[data-v-6f70ed94]{display:block;float:left;margin:3px;height:100px;width:100px;object-fit:cover}pre[data-v-6f70ed94]{font-family:Monaco;color:#fff;padding:.5rem}p[data-v-6f70ed94]{background:#4d4d4d}header[data-v-6f70ed94]{font-size:2rem;color:#fff}footer[data-v-6f70ed94]{font-size:1rem;color:#fff}.descript[data-v-6f70ed94]{font-size:1.3rem;color:#9a9a9a;margin-bottom:2rem}.subtitle[data-v-6f70ed94]{font-size:1.2rem;color:#a7a8aa;margin-bottom:1rem}.vue-green[data-v-6f70ed94]{color:#4fc08d}.iconfont[data-v-6f70ed94]{font-size:1.5rem;margin:.3rem}.gray[data-v-6f70ed94]{color:#ccc}", ""]);
+exports.push([module.i, ".thumbnail[data-v-504e1a85]{display:block;float:left;margin:3px;height:100px;width:100px;object-fit:cover}pre[data-v-504e1a85]{font-family:Monaco;color:#fff;padding:.5rem}p[data-v-504e1a85]{background:#4d4d4d}header[data-v-504e1a85]{font-size:2rem;color:#fff}footer[data-v-504e1a85]{font-size:1rem;color:#fff}.descript[data-v-504e1a85]{font-size:1.3rem;color:#9a9a9a;margin-bottom:2rem}.subtitle[data-v-504e1a85]{font-size:1.2rem;color:#a7a8aa;margin-bottom:1rem}.vue-green[data-v-504e1a85]{color:#4fc08d}.iconfont[data-v-504e1a85]{font-size:1.5rem;margin:.3rem}.gray[data-v-504e1a85]{color:#ccc}", ""]);
 
 // exports
 
@@ -10173,7 +10163,7 @@ var content = __webpack_require__(20);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("b6308f70", content, true, {});
+var update = __webpack_require__(1)("9314425e", content, true, {});
 
 /***/ }),
 /* 20 */
@@ -10184,7 +10174,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, ".prevent-pass-through[data-v-1936c06e]{position:fixed;height:100%;width:100%;z-index:9;display:none}.prevent-pass-through-show[data-v-1936c06e]{display:block}.words[data-v-1936c06e]{position:absolute;text-align:center;color:#f0f8ff;text-shadow:-1px -1px 0 #111,1px -1px 0 #111,-1px 1px 0 #111,1px 1px 0 #111}.index[data-v-1936c06e]{bottom:20px;width:100%}.close-btn[data-v-1936c06e]{top:5px;right:5px;padding:5px;font-size:1.2rem}.slider[data-v-1936c06e]{position:fixed;top:100%;width:100%;left:0;height:100%;overflow:hidden;z-index:1000;opacity:0;-webkit-touch-callout:none;user-select:none}.item-wrapper[data-v-1936c06e]{display:flex;justify-content:flex-start;height:100%}.item[data-v-1936c06e]{height:100%;flex-basis:100%;flex-shrink:0}.z1[data-v-1936c06e]{z-index:1}.open[data-v-1936c06e]{animation:open-data-v-1936c06e .3s;animation-fill-mode:forwards}@keyframes open-data-v-1936c06e{0%{opacity:0;transform:translateY(0)}to{opacity:1;transform:translateY(-100%)}}.close[data-v-1936c06e]{animation:close-data-v-1936c06e .3s;animation-fill-mode:forwards}@keyframes close-data-v-1936c06e{0%{opacity:1;transform:translateY(-100%)}to{opacity:0;transform:translateY(0)}}", ""]);
+exports.push([module.i, ".prevent-pass-through[data-v-5557745f]{position:fixed;height:100%;width:100%;z-index:9;display:none}.prevent-pass-through-show[data-v-5557745f]{display:block}.words[data-v-5557745f]{position:absolute;text-align:center;font-size:12px;font-weight:700;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:-.15px;color:#2b3743}.index[data-v-5557745f]{bottom:20px;width:100%}.close-btn[data-v-5557745f]{top:16px;left:24px;padding:0;font-size:26px}.title[data-v-5557745f]{font-size:14px;font-weight:700;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:-.18px;text-align:center;color:#2b3743;top:22px;width:100%}.slider[data-v-5557745f]{position:fixed;top:100%;width:100%;left:0;height:100%;overflow:hidden;z-index:1000;opacity:0;-webkit-touch-callout:none;user-select:none}.item-wrapper[data-v-5557745f]{display:flex;justify-content:flex-start;height:100%}.item[data-v-5557745f]{height:100%;flex-basis:100%;flex-shrink:0}.z1[data-v-5557745f]{z-index:1}.open[data-v-5557745f]{animation:open-data-v-5557745f .3s;animation-fill-mode:forwards}@keyframes open-data-v-5557745f{0%{opacity:0;transform:translateY(0)}to{opacity:1;transform:translateY(-100%)}}.close[data-v-5557745f]{animation:close-data-v-5557745f .3s;animation-fill-mode:forwards}@keyframes close-data-v-5557745f{0%{opacity:1;transform:translateY(-100%)}to{opacity:0;transform:translateY(0)}}", ""]);
 
 // exports
 
@@ -10342,7 +10332,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"prevent-pass-through"}),_vm._v(" "),_c('div',{directives:[{name:"finger",rawName:"v-finger:singleTap",value:(_vm.handleTapClose),expression:"handleTapClose",arg:"singleTap"}],staticClass:"slider",style:({'background-color':_vm.backgroundColor})},[_c('div',{directives:[{name:"transform",rawName:"v-transform"},{name:"finger",rawName:"v-finger:pressMove",value:(_vm.handlePressMove),expression:"handlePressMove",arg:"pressMove"},{name:"finger",rawName:"v-finger:touchStart",value:(_vm.handleTouchStart),expression:"handleTouchStart",arg:"touchStart"},{name:"finger",rawName:"v-finger:touchEnd",value:(_vm.handleTouchEnd),expression:"handleTouchEnd",arg:"touchEnd"},{name:"finger",rawName:"v-finger:swipe",value:(_vm.handleSwipe),expression:"handleSwipe",arg:"swipe"}],staticClass:"item-wrapper"},_vm._l((_vm.imgList),function(src,index){return _c('VuerSingle',{key:src + index,ref:"img",refInFor:true,staticClass:"item",class:{z1:_vm.currentIndex===index},attrs:{"src":src},on:{"disableSwipe":function($event){_vm.allowSwipe = false},"enableSwipe":function($event){_vm.allowSwipe = true}}})}),1),_vm._v(" "),(_vm.useCloseButton)?_c('div',{staticClass:"words close-btn",on:{"click":function($event){return _vm.handleTapClose(null,null,true)}}},[_vm._v("×")]):_vm._e(),_vm._v(" "),(_vm.isIndexShow)?_c('div',{staticClass:"words index"},[_vm._v(_vm._s(_vm.currentIndex + 1 + '/' + _vm.imgList.length))]):_vm._e()])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"prevent-pass-through"}),_vm._v(" "),_c('div',{directives:[{name:"finger",rawName:"v-finger:singleTap",value:(_vm.handleTapClose),expression:"handleTapClose",arg:"singleTap"}],staticClass:"slider",style:({'background-color':_vm.backgroundColor})},[_c('div',{directives:[{name:"transform",rawName:"v-transform"},{name:"finger",rawName:"v-finger:pressMove",value:(_vm.handlePressMove),expression:"handlePressMove",arg:"pressMove"},{name:"finger",rawName:"v-finger:touchStart",value:(_vm.handleTouchStart),expression:"handleTouchStart",arg:"touchStart"},{name:"finger",rawName:"v-finger:touchEnd",value:(_vm.handleTouchEnd),expression:"handleTouchEnd",arg:"touchEnd"},{name:"finger",rawName:"v-finger:swipe",value:(_vm.handleSwipe),expression:"handleSwipe",arg:"swipe"}],staticClass:"item-wrapper"},_vm._l((_vm.imgList),function(src,index){return _c('VuerSingle',{key:src + index,ref:"img",refInFor:true,staticClass:"item",class:{z1:_vm.currentIndex===index},attrs:{"src":src},on:{"disableSwipe":function($event){_vm.allowSwipe = false},"enableSwipe":function($event){_vm.allowSwipe = true}}})}),1),_vm._v(" "),_c('div',{staticClass:"words title"},[_vm._v(_vm._s(_vm.title))]),_vm._v(" "),(_vm.useCloseButton)?_c('div',{staticClass:"words close-btn",on:{"click":function($event){return _vm.handleTapClose(null,null,true)}}},[_vm._v("×")]):_vm._e(),_vm._v(" "),(_vm.isIndexShow)?_c('div',{staticClass:"words index"},[_vm._v(_vm._s(_vm.currentIndex + 1 + '/' + _vm.imgList.length))]):_vm._e()])])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -10352,7 +10342,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('scroller',[_c('div',{staticStyle:{"padding":"20px"}},[_c('header',[_c('i',{staticClass:"iconfont icon-image"}),_vm._v("img\n      "),_c('span',{staticClass:"vue-green"},[_vm._v("Vue")]),_vm._v("r\n    ")]),_vm._v(" "),_c('div',{staticClass:"descript"},[_vm._v("\n      An image viewer base on Vue.js for mobile\n    ")]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Multiple")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list1),function(img){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery:group1",arg:"group1"}],key:img.src,staticClass:"thumbnail",attrs:{"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v(":group1\n    v-for=\""),_c('span',{staticClass:"symbol"},[_vm._v("img in list1")]),_vm._v("\" \n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Multiple(same images)")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list2),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery",value:('group2'),expression:"'group2'"}],key:img.src + index,staticClass:"thumbnail",attrs:{"data-index":index,"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v("=\"'group2'\"\n    v-for=\"(img,index) in list2\" \n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":data-index=\"index\"")]),_vm._v("\n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Single")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list3),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.src}})}),0),_vm._v(" "),_c('div',{staticClass:"subtitle",staticStyle:{"margin-top":"0.6rem"}},[_vm._v("Small/Long")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list3_5),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v("\n    v-for=\"img in list3\" \n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Use thumbnail")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list4),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery:group3",arg:"group3"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.thumbnail,"data-large":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v(":group3\n    v-for=\"(img,index) in list4\"\n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":data-large=\"img.src\"")]),_vm._v("\n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":src=\"img.thumbnail\"")]),_vm._v(">")])]),_vm._v(" "),_c('footer',{on:{"click":_vm.toGitHub}},[_c('i',{staticClass:"iconfont icon-github"}),_vm._v("GitHub")])])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('scroller',[_c('div',{staticStyle:{"padding":"20px"}},[_c('header',[_c('i',{staticClass:"iconfont icon-image"}),_vm._v("img\n      "),_c('span',{staticClass:"vue-green"},[_vm._v("Vue")]),_vm._v("r\n    ")]),_vm._v(" "),_c('div',{staticClass:"descript"},[_vm._v("\n      An image viewer base on Vue.js for mobile\n    ")]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Multiple")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list1),function(img){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery:group1",arg:"group1"}],key:img.src,staticClass:"thumbnail",attrs:{"data-title":'로우커피스탠드',"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v(":group1\n    v-for=\""),_c('span',{staticClass:"symbol"},[_vm._v("img in list1")]),_vm._v("\" \n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Multiple(same images)")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list2),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery",value:('group2'),expression:"'group2'"}],key:img.src + index,staticClass:"thumbnail",attrs:{"data-index":index,"data-title":'hi',"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v("=\"'group2'\"\n    v-for=\"(img,index) in list2\" \n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":data-index=\"index\"")]),_vm._v("\n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Single")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list3),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.src}})}),0),_vm._v(" "),_c('div',{staticClass:"subtitle",staticStyle:{"margin-top":"0.6rem"}},[_vm._v("Small/Long")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list3_5),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v("\n    v-for=\"img in list3\" \n    :src=\"img.src\">")])]),_vm._v(" "),_c('div',{staticClass:"subtitle"},[_vm._v("Use thumbnail")]),_vm._v(" "),_c('div',{staticStyle:{"overflow":"hidden"}},_vm._l((_vm.list4),function(img,index){return _c('img',{directives:[{name:"gallery",rawName:"v-gallery:group3",arg:"group3"}],key:img.src + index,staticClass:"thumbnail",attrs:{"src":img.thumbnail,"data-large":img.src}})}),0),_vm._v(" "),_c('p',[_c('pre',[_vm._v("<img \n    "),_c('span',{staticClass:"vue-green"},[_vm._v("v-gallery")]),_vm._v(":group3\n    v-for=\"(img,index) in list4\"\n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":data-large=\"img.src\"")]),_vm._v("\n    "),_c('span',{staticClass:"vue-green"},[_vm._v(":src=\"img.thumbnail\"")]),_vm._v(">")])]),_vm._v(" "),_c('footer',{on:{"click":_vm.toGitHub}},[_c('i',{staticClass:"iconfont icon-github"}),_vm._v("GitHub")])])])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -10369,93 +10359,91 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 
 
 // 有写大图属性就取大图
-const getImgSrc = el => el.dataset.large || el.src
+const getImgSrc = el => el.dataset.large || el.src;
 
 const gallery = {
   install(Vue, options = {}) {
-    Vue.use(__WEBPACK_IMPORTED_MODULE_1_v_finger_mk42___default.a)
+    Vue.use(__WEBPACK_IMPORTED_MODULE_1_v_finger_mk42___default.a);
     // 所有图片地址储存位置
-    let imgList = {}
-    let VuerE = Vue.extend(__WEBPACK_IMPORTED_MODULE_0__Vuer_vue__["a" /* default */])
+    let imgList = {};
+    let VuerE = Vue.extend(__WEBPACK_IMPORTED_MODULE_0__Vuer_vue__["a" /* default */]);
     // 新建实例并挂载
-    let vm = new VuerE().$mount()
+    let vm = new VuerE().$mount();
     // 如果没有提供 $mount 的参数，模板将被渲染为文档之外的的元素，并且你必须使用原生 DOM API 把它插入文档中。
-    document.querySelector('body').appendChild(vm.$el)
+    document.querySelector('body').appendChild(vm.$el);
 
-    vm.swipeThreshold = options.swipeThreshold || 100
+    vm.swipeThreshold = options.swipeThreshold || 100;
 
-    vm.isIndexShow =
-      options.isIndexShow === undefined ? true : options.isIndexShow
+    vm.isIndexShow = options.isIndexShow === undefined ? true : options.isIndexShow;
 
-    vm.useCloseButton =
-      options.useCloseButton === undefined ? true : options.useCloseButton
+    vm.useCloseButton = options.useCloseButton === undefined ? true : options.useCloseButton;
 
-    vm.preload = options.preload === undefined ? true : options.preload
+    vm.preload = options.preload === undefined ? true : options.preload;
 
-    options.loadingStyle // TODO
+    options.loadingStyle; // TODO
     let openVuer = (el, group) => e => {
-      let imgSrc = getImgSrc(el)
+      let imgSrc = getImgSrc(el);
       if (group || group === 0) {
-        vm.isSingle = false
-        vm.imgList = imgList[group]
-        vm.isShow = true
-        vm.currentIndex =
-          Number(e.currentTarget.dataset.index) || vm.imgList.indexOf(imgSrc)
+        vm.isSingle = false;
+        vm.imgList = imgList[group];
+        vm.isShow = true;
+        vm.currentIndex = Number(e.currentTarget.dataset.index) || vm.imgList.indexOf(imgSrc);
+        vm.title = e.currentTarget.dataset.title;
       } else {
-        vm.isSingle = true
-        vm.imgList = [imgSrc]
-        vm.isShow = true
-        vm.currentIndex = 0
+        vm.isSingle = true;
+        vm.imgList = [imgSrc];
+        vm.isShow = true;
+        vm.currentIndex = 0;
       }
-    }
+    };
     Vue.prototype.$imgVuer = {
       close() {
-        vm.closeGallery.call(vm)
+        vm.closeGallery.call(vm);
       },
       onIndexChange(cb) {
         // 0.16.0
-        vm.$watch('currentIndex', cb)
+        vm.$watch('currentIndex', cb);
       },
       onToggle(cb) {
         // 0.16.0
-        vm.$watch('isShow', cb)
+        vm.$watch('isShow', cb);
       },
       changeBGColor(color) {
         // 0.16.1
-        vm.backgroundColor = color
+        vm.backgroundColor = color;
       },
       next() {
         // 0.16.2
-        vm.next.call(vm)
+        vm.next.call(vm);
       },
       prev() {
         // 0.16.2
-        vm.prev.call(vm)
+        vm.prev.call(vm);
       },
       getCurrentIndex() {
         // 0.16.2
-        return vm.currentIndex
-      },
-    }
+        return vm.currentIndex;
+      }
+    };
     Vue.directive('gallery', {
       bind(el) {
-        if (!el.src) throw '<img /> missing src'
+        if (!el.src) throw '<img /> missing src';
       },
       // add update
       inserted(el, binding) {
         // 同时兼容arg和value传分组名称
         // 加 String() 防止 0 捣乱
-        let group = binding.arg || binding.value
-        el.addEventListener('click', openVuer(el, group))
-        let imgSrc = getImgSrc(el)
+        let group = binding.arg || binding.value;
+        el.addEventListener('click', openVuer(el, group));
+        let imgSrc = getImgSrc(el);
         if (group) {
-          let imgGroup = imgList[group]
+          let imgGroup = imgList[group];
           // 有分组
           if (imgGroup) {
             // 分组已定义
-            imgGroup.push(imgSrc)
+            imgGroup.push(imgSrc);
           } else {
-            imgList[group] = [imgSrc]
+            imgList[group] = [imgSrc];
           }
         } else {
           // 无分组（单张）
@@ -10464,21 +10452,20 @@ const gallery = {
       },
       unbind(el, binding) {
         // 调查keep alive后跳转是否触发unbind
-        vm.isShow = false
-        let imgSrc = getImgSrc(el)
-        let group = binding.arg || binding.value
-        el.removeEventListener('click', openVuer(el, group))
+        vm.isShow = false;
+        let imgSrc = getImgSrc(el);
+        let group = binding.arg || binding.value;
+        el.removeEventListener('click', openVuer(el, group));
         if (group || group === 0) {
-          let imgGroup = imgList[group]
-          let index = imgGroup.indexOf(imgSrc)
-          imgGroup.splice(index, 1)
+          let imgGroup = imgList[group];
+          let index = imgGroup.indexOf(imgSrc);
+          imgGroup.splice(index, 1);
         }
-      },
-    })
-  },
-}
+      }
+    });
+  }
+};
 /* harmony default export */ __webpack_exports__["a"] = (gallery);
-
 
 /***/ }),
 /* 32 */
