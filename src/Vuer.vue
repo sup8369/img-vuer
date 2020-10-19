@@ -32,7 +32,7 @@
       <div v-if="isIndexShow" class="words index">
         {{ currentIndex + 1 + "/" + imgList.length }}
         <br />
-        {{ desc.length >= currentIndex ? desc[currentIndex] : "" }}
+        {{ desc }}
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ export default {
       allowSwipe: false,
       currentIndex: 0,
       title: "",
-      desc: [],
+      desc: "",
       /**
        * 从允许swipe开始纪录swipe位移
        * handleTouchEnd时位移小于100（意味着无法触发swipe），清零
