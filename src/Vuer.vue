@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="z-index: 50">
     <div class="prevent-pass-through"></div>
     <div
       class="slider"
