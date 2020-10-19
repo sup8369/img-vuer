@@ -26,13 +26,17 @@
         />
       </div>
       <div class="words title">{{ title }}</div>
-      <div v-if="useCloseButton" @click="handleTapClose(null, null, true)" class="words close-btn">
+      <div
+        v-if="useCloseButton"
+        @click="handleTapClose(null, null, true)"
+        class="words close-btn"
+      >
         ×
       </div>
       <div v-if="isIndexShow" class="words index">
         {{ currentIndex + 1 + "/" + imgList.length }}
         <br />
-        {{ desc }}
+        {{ desc.length >= currentIndex ? desc[currentIndex] : "" }}
       </div>
     </div>
   </div>
@@ -55,7 +59,7 @@ export default {
       allowSwipe: false,
       currentIndex: 0,
       title: "",
-      desc: "",
+      desc: [],
       /**
        * 从允许swipe开始纪录swipe位移
        * handleTouchEnd时位移小于100（意味着无法触发swipe），清零
@@ -91,7 +95,8 @@ export default {
         window.removeEventListener("popstate", this.closeGallery);
         setTimeout(
           () =>
-            (document.querySelector(".prevent-pass-through").className = "prevent-pass-through"),
+            (document.querySelector(".prevent-pass-through").className =
+              "prevent-pass-through"),
           400
         );
         document.querySelector(".slider").className = "slider close";

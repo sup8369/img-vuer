@@ -16,6 +16,7 @@
           :data-title="'로우커피스탠드'"
           v-for="img in list1"
           :src="img.src"
+          data-desc="ahtasoptashot://////"
           :key="img.src">
       </div>
       <p>
