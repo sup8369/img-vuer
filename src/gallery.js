@@ -32,7 +32,7 @@ const gallery = {
         vm.isShow = true;
         vm.currentIndex = Number(e.currentTarget.dataset.index) || vm.imgList.indexOf(imgSrc);
         vm.title = e.currentTarget.dataset.title;
-        vm.desc = e.currentTarget.dataset.desc || [];
+        vm.desc = e.currentTarget.dataset.desc || "";
       } else {
         vm.isSingle = true;
         vm.imgList = [imgSrc];
@@ -47,6 +47,7 @@ const gallery = {
       onIndexChange(cb) {
         // 0.16.0
         vm.$watch("currentIndex", cb);
+        vm.$watch("desc", cb);
       },
       onToggle(cb) {
         // 0.16.0

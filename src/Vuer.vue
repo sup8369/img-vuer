@@ -36,7 +36,7 @@
       <div v-if="isIndexShow" class="words index">
         {{ currentIndex + 1 + "/" + imgList.length }}
         <br />
-        {{ desc.length >= currentIndex ? desc[currentIndex] : "" }}
+        {{ desc }}
       </div>
     </div>
   </div>
