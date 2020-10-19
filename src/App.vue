@@ -16,7 +16,7 @@
           :data-title="'로우커피스탠드'"
           v-for="img in list1"
           :src="img.src"
-          data-desc="ahtasoptashot://////"
+          :data-desc="`aht${img.src}i`"
           :key="img.src">
       </div>
       <p>
@@ -91,84 +91,84 @@
 </template>
 
 <script>
-import Vuer from './Vuer.vue'
+import Vuer from "./Vuer.vue";
 export default {
   components: { Vuer },
-  mounted(){
-    console.log(this.$imgVuer)
+  mounted() {
+    console.log(this.$imgVuer);
   },
   data() {
     return {
       list1: [
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/1.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/1.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/2.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/2.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/3.jpg'
-        }
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/3.jpg",
+        },
       ],
       list2: [
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/4.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/4.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/5.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/5.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/5.jpg'
-        }
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/5.jpg",
+        },
       ],
       list3: [
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/6.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/6.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/7.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/7.jpg",
         },
       ],
       list3_5: [
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/8.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/8.jpg",
         },
         {
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/9.jpg'
-        }
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/9.jpg",
+        },
       ],
       list4: [
         {
           thumbnail:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/t1.jpg',
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/t1.jpg",
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/7.jpg'
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/7.jpg",
         },
         {
           thumbnail:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/t2.jpg',
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/t2.jpg",
           src:
-            'https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/4.jpg'
-        }
-      ]
-    }
+            "https://raw.githubusercontent.com/ssshooter/img-vuer/master/img/4.jpg",
+        },
+      ],
+    };
   },
   methods: {
     toGitHub() {
-      location.href = 'https://github.com/ssshooter/img-vuer'
-    }
-  }
-}
+      location.href = "https://github.com/ssshooter/img-vuer";
+    },
+  },
+};
 </script>
 
 <style scoped>
