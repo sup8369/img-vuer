@@ -44,6 +44,12 @@ const gallery = {
       close() {
         vm.closeGallery.call(vm);
       },
+      open({ current, urls }) {
+        vm.isSingle = urls.length === 1;
+        vm.imgList = urls;
+        vm.isShow = true;
+        vm.currentIndex = vm.imgList.indexOf(current);
+      },
       onIndexChange(cb) {
         // 0.16.0
         vm.$watch("currentIndex", cb);
